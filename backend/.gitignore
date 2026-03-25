@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# ML models (mounted as volume)
+ml_models/*.pt
+ml_models/*.onnx
+
+# Data
+data/
+
+# Alembic
+alembic/versions/*.py
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
