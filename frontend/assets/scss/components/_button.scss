@@ -1,0 +1,60 @@
+@use '../abstracts' as *;
+
+// .button
+// .button--primary
+// .button--secondary
+// .button--danger
+// .button--sm / .button--lg
+// .button--loading
+
+.button {
+  @include flex(row, center, center, $spacing-2);
+  display: inline-flex;
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius;
+  border: 1px solid transparent;
+  transition: background $transition-fast, border-color $transition-fast, opacity $transition-fast;
+  white-space: nowrap;
+
+  &:focus-visible { @include focus-ring; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  @include modifier(primary) {
+    background: $color-primary;
+    color: $color-text-inverse;
+
+    &:hover:not(:disabled) { background: $color-primary-dark; }
+  }
+
+  @include modifier(secondary) {
+    background: transparent;
+    border-color: $color-border;
+    color: $color-text;
+
+    &:hover:not(:disabled) { background: $color-bg; }
+  }
+
+  @include modifier(danger) {
+    background: $color-danger;
+    color: $color-text-inverse;
+
+    &:hover:not(:disabled) { opacity: 0.9; }
+  }
+
+  @include modifier(sm) {
+    padding: $spacing-1 $spacing-3;
+    font-size: $font-size-xs;
+  }
+
+  @include modifier(lg) {
+    padding: $spacing-3 $spacing-6;
+    font-size: $font-size-base;
+  }
+
+  @include modifier(loading) {
+    cursor: wait;
+    opacity: 0.7;
+  }
+}

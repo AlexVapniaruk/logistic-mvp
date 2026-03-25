@@ -9,9 +9,9 @@ class EventReadSchema(BaseModel):
     confidence: float
     timestamp: datetime
     frame_path: str | None
-    metadata: dict = Field(default_factory=dict)
+    metadata: dict = Field(default_factory=dict, validation_alias='metadata_')
 
-    model_config = {"from_attributes": True}
+    model_config = {"from_attributes": True, "populate_by_name": True}
 
 
 class EventCreateSchema(BaseModel):

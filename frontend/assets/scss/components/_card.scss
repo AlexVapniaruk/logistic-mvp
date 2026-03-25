@@ -1,0 +1,40 @@
+@use '../abstracts' as *;
+
+// .card
+// .card__header
+// .card__body
+// .card__footer
+// .card--flat
+
+.card {
+  @include card;
+  padding: $spacing-6;
+
+  @include element(header) {
+    @include flex(row, center, space-between);
+    margin-bottom: $spacing-4;
+    padding-bottom: $spacing-4;
+    border-bottom: 1px solid $color-border;
+  }
+
+  @include element(title) {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  @include element(body) {
+    flex: 1;
+  }
+
+  @include element(footer) {
+    margin-top: $spacing-4;
+    padding-top: $spacing-4;
+    border-top: 1px solid $color-border;
+    @include flex(row, center, flex-end, $spacing-2);
+  }
+
+  @include modifier(flat) {
+    box-shadow: none;
+    border-color: $color-border;
+  }
+}

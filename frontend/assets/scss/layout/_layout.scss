@@ -1,0 +1,40 @@
+@use '../abstracts' as *;
+
+.layout {
+  display: grid;
+  grid-template-columns: $sidebar-width 1fr;
+  grid-template-rows: $header-height 1fr;
+  min-height: 100vh;
+
+  @include element(header) {
+    grid-column: 1 / -1;
+    @include flex(row, center, space-between, $spacing-4);
+    padding: 0 $spacing-6;
+    background: $color-surface;
+    border-bottom: 1px solid $color-border;
+    box-shadow: $shadow-sm;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  @include element(sidebar) {
+    background: $color-surface;
+    border-right: 1px solid $color-border;
+    padding: $spacing-6 0;
+    overflow-y: auto;
+  }
+
+  @include element(main) {
+    padding: $spacing-6;
+    overflow-y: auto;
+    background: $color-bg;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: $container-max-w;
+  margin: 0 auto;
+  padding: 0 $spacing-6;
+}

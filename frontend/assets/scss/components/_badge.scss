@@ -1,0 +1,34 @@
+@use '../abstracts' as *;
+
+// .badge
+// .badge--success / --warning / --danger / --info
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-1 $spacing-2;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-sm;
+  line-height: 1;
+
+  @include modifier(success) {
+    background: rgba($color-success, 0.1);
+    color: $color-success;
+  }
+
+  @include modifier(warning) {
+    background: rgba($color-warning, 0.1);
+    color: $color-warning;
+  }
+
+  @include modifier(danger) {
+    background: rgba($color-danger, 0.1);
+    color: $color-danger;
+  }
+
+  @include modifier(info) {
+    background: rgba($color-primary, 0.1);
+    color: $color-primary;
+  }
+}

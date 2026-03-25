@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.event import Event
 from app.schemas.event import EventFilterSchema, EventReadSchema
-from app.schemas.event import EventReadSchema
 
 
 class GetEventsListService:
@@ -12,13 +11,10 @@ class GetEventsListService:
 
     async def execute(self, filters: EventFilterSchema) -> list[EventReadSchema]:
         conditions = self._build_conditions(filters)
-        stmt = (
-            select(Event)
-            .where(and_(*conditions))
-            .order_by(Event.timestamp.desc())
-            .limit(filters.limit)
-            .offset(filters.offset)
-        )
+        stmt = select(Event).order_by(Event.timestamp.desc())
+        if conditions:
+            stmt = stmt.where(and_(*conditions))
+        stmt = stmt.limit(filters.limit).offset(filters.offset)
         result = await self.db.execute(stmt)
         return [EventReadSchema.model_validate(row) for row in result.scalars()]
 

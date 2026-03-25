@@ -1,8 +1,21 @@
 export default defineNuxtConfig({
-  modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss'],
+  modules: ['@pinia/nuxt'],
+
+  css: ['~/assets/scss/main.scss'],
 
   typescript: {
     strict: true,
+  },
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // Makes abstracts (variables + mixins) available in every SFC <style>
+          additionalData: '@use "~/assets/scss/abstracts" as *;',
+        },
+      },
+    },
   },
 
   runtimeConfig: {
