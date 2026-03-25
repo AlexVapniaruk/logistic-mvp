@@ -1,7 +1,7 @@
-# Frontend — Nuxt 3 + TypeScript
+# Frontend — Nuxt 4 + TypeScript
 
 ## Stack
-Nuxt 3 · TypeScript · Pinia · Tailwind CSS
+Nuxt 4 · Vite 6 · TypeScript · Pinia · Tailwind CSS
 
 ## Layer responsibilities
 | Layer | Rule |
