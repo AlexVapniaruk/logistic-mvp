@@ -23,3 +23,18 @@ Structure: `assets/scss/abstracts/` · `base/` · `components/` · `layout/`
 - Never call `$fetch` or `useFetch` directly in pages or stores — use `api-sdk/`
 - All types imported from `api-sdk/types.ts`
 - WebSocket via `api-sdk/ws.client.ts` only
+
+## Worker tracking modules
+
+| Page | Store(s) | api-sdk files |
+|---|---|---|
+| `map-editor.vue` | terminals, zones, sectors, cameras | terminals, zones, sectors, cameras |
+| `live-dashboard.vue` | employees (positions overlay) | sensor-positions, ws positions channel |
+| `employee-tracking.vue` | employees | employees |
+| `annotation.vue` | camera-events, annotations | camera-events, annotations |
+| `analytics.vue` (extended) | — | worker-analytics |
+
+## WebSocket channels
+- `/ws/live` — camera events (existing)
+- `/ws/positions` — sensor position updates (new)
+Both wrapped via `useWebSocket` composable. Never open raw WebSocket in pages.

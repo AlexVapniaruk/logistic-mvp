@@ -62,7 +62,7 @@ export interface WsMessage {
   payload: unknown
 }
 
-export type WsMessageType = 'event' | 'inference_result' | 'training_progress' | 'error'
+export type WsMessageType = 'event' | 'inference_result' | 'training_progress' | 'error' | 'position_update'
 
 export interface InferenceResult {
   camera_id: string
@@ -82,4 +82,110 @@ export interface PaginatedResponse<T> {
   total: number
   limit: number
   offset: number
+}
+
+// --- Worker tracking ---
+
+export interface Terminal {
+  id: number
+  name: string
+  description: string | null
+  map_image_url: string | null
+}
+
+export interface Zone {
+  id: number
+  name: string
+  points: [number, number][]
+  terminal_id: number
+}
+
+export interface Sector {
+  id: number
+  name: string
+  points: [number, number][]
+  zone_id: number
+}
+
+export interface Camera {
+  id: number
+  name: string
+  stream_url: string
+  terminal_id: number
+  zone_id: number | null
+  sector_id: number | null
+}
+
+export interface Employee {
+  id: number
+  name: string
+  badge_id: string
+  terminal_id: number
+}
+
+export interface SensorPosition {
+  id: number
+  employee_id: number
+  x: number
+  y: number
+  zone_id: number | null
+  sector_id: number | null
+  timestamp: string
+}
+
+export interface CameraEvent {
+  id: number
+  camera_id: number
+  timestamp: string
+  action_type: string
+  confidence: number
+  bounding_box: number[] | null
+  video_clip_url: string | null
+  needs_annotation: boolean
+  employee_action_id: number | null
+}
+
+export interface EmployeeAction {
+  id: number
+  employee_id: number
+  zone_id: number
+  sector_id: number | null
+  action_type: string
+  confidence: number
+  source_event_id: number | null
+  timestamp: string
+}
+
+export interface Annotation {
+  id: number
+  camera_event_id: number
+  annotator_id: string
+  action_type: string
+  notes: string | null
+  created_at: string
+}
+
+export interface HeatmapEntry {
+  zone_id: number
+  zone_name: string
+  count: number
+  sector_breakdown: Record<string, number>
+}
+
+export interface HeatmapResponse {
+  entries: HeatmapEntry[]
+  from_ts: string | null
+  to_ts: string | null
+}
+
+export interface ZoneAnalytics {
+  zone_id: number
+  zone_name: string
+  action_count: number
+}
+
+export interface EmployeeAnalytics {
+  employee_id: number
+  action_counts: Record<string, number>
+  total: number
 }
