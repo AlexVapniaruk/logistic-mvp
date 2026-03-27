@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.db import init_db
@@ -27,6 +28,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Logistics Terminal API", lifespan=lifespan)
+
+app.mount("/uploads", StaticFiles(directory="/app/uploads", check_dir=False), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,

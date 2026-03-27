@@ -7,6 +7,12 @@ class TerminalCreateSchema(BaseModel):
     map_image_url: str | None = None
 
 
+class TerminalUpdateSchema(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    map_image_url: str | None = None
+
+
 class TerminalReadSchema(BaseModel):
     id: int
     name: str

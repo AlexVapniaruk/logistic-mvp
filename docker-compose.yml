@@ -21,6 +21,7 @@ services:
       MODEL_PATH: /app/ml_models/best.pt
     volumes:
       - ./backend/ml_models:/app/ml_models
+      - ./backend/uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy

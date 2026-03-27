@@ -1,6 +1,6 @@
 import { $fetch } from 'ofetch'
 
-const getBaseUrl = (): string => {
+export const getBaseUrl = (): string => {
   if (typeof window !== 'undefined') {
     return (window as Window & { __NUXT__?: { config?: { public?: { apiBase?: string } } } })
       ?.__NUXT__?.config?.public?.apiBase ?? '/api'

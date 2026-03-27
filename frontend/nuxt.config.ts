@@ -35,6 +35,12 @@ export default defineNuxtConfig({
         target: process.env.BACKEND_WS_URL ?? 'ws://localhost:8000/ws',
         ws: true,
       },
+      '/uploads': {
+        target: process.env.BACKEND_URL
+          ? process.env.BACKEND_URL.replace('/api', '/uploads')
+          : 'http://localhost:8000/uploads',
+        changeOrigin: true,
+      },
     },
   },
 })

@@ -1,13 +1,15 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db import get_db
-from app.schemas.terminal import TerminalCreateSchema, TerminalReadSchema
+from app.schemas.terminal import TerminalCreateSchema, TerminalUpdateSchema, TerminalReadSchema
 from app.schemas.zone import ZoneBodySchema, ZoneCreateSchema, ZoneReadSchema
 from app.schemas.sector import SectorBodySchema, SectorCreateSchema, SectorReadSchema
 from app.services.terminals.create_terminal_service import CreateTerminalService
 from app.services.terminals.get_terminal_service import GetTerminalService
 from app.services.terminals.list_terminals_service import ListTerminalsService
+from app.services.terminals.update_terminal_service import UpdateTerminalService
+from app.services.terminals.upload_terminal_image_service import UploadTerminalImageService
 from app.services.zones.create_zone_service import CreateZoneService
 from app.services.zones.list_zones_service import ListZonesService
 from app.services.sectors.create_sector_service import CreateSectorService
@@ -29,6 +31,13 @@ async def create_terminal(payload: TerminalCreateSchema, db: AsyncSession = Depe
 @router.get("/{terminal_id}", response_model=TerminalReadSchema)
 async def get_terminal(terminal_id: int, db: AsyncSession = Depends(get_db)):
     return await GetTerminalService(db).execute(terminal_id)
+
+
+@router.patch("/{terminal_id}", response_model=TerminalReadSchema)
+async def update_terminal(
+    terminal_id: int, payload: TerminalUpdateSchema, db: AsyncSession = Depends(get_db)
+):
+    return await UpdateTerminalService(db).execute(terminal_id, payload)
 
 
 @router.get("/{terminal_id}/zones/", response_model=list[ZoneReadSchema])
@@ -61,3 +70,12 @@ async def create_sector_for_zone(
 ):
     schema = SectorCreateSchema(name=payload.name, points=payload.points, zone_id=zone_id)
     return await CreateSectorService(db).execute(schema)
+
+
+@router.post("/{terminal_id}/upload-image", response_model=TerminalReadSchema)
+async def upload_terminal_image(
+    terminal_id: int,
+    file: UploadFile = File(...),
+    db: AsyncSession = Depends(get_db),
+):
+    return await UploadTerminalImageService(db).execute(terminal_id, file)

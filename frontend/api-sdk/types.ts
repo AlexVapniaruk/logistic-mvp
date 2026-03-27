@@ -111,6 +111,9 @@ export interface Camera {
   id: number
   name: string
   stream_url: string
+  mac_address: string | null
+  version: string | null
+  location: string | null
   terminal_id: number
   zone_id: number | null
   sector_id: number | null
@@ -188,4 +191,27 @@ export interface EmployeeAnalytics {
   employee_id: number
   action_counts: Record<string, number>
   total: number
+}
+
+export interface ActiveEmployee {
+  employee_id: number
+  employee_name: string
+  last_seen: string
+  last_x: number
+  last_y: number
+}
+
+export interface ZoneLiveStats {
+  zone_id: number
+  zone_name: string
+  active_employee_count: number
+  last_activity_at: string | null
+  active_employees: ActiveEmployee[]
+  action_counts: Record<string, number>
+}
+
+export interface ZoneLiveResponse {
+  generated_at: string
+  window_minutes: number
+  zones: ZoneLiveStats[]
 }

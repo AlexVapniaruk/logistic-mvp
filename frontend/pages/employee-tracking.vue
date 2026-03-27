@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useEmployeesStore } from '~/stores/employees.store'
+import { useTerminalsStore } from '~/stores/terminals.store'
 
 const store = useEmployeesStore()
+const terminalsStore = useTerminalsStore()
+
+const employees = computed(() =>
+  store.items.filter(e => e.terminal_id === terminalsStore.selected?.id)
+)
 
 onMounted(() => store.loadEmployees())
 </script>
@@ -16,9 +22,13 @@ onMounted(() => store.loadEmployees())
       {{ store.error }}
     </div>
 
+    <p v-else-if="!employees.length" class="employee-tracking__state">
+      No employees for this terminal.
+    </p>
+
     <div v-else class="employee-tracking__grid">
       <EmployeeCard
-        v-for="employee in store.items"
+        v-for="employee in employees"
         :key="employee.id"
         :employee="employee"
         :position="store.positions[employee.id] ?? null"
