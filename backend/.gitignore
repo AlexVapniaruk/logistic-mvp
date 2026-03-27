@@ -12,6 +12,14 @@ ml_models/*.onnx
 # Data
 data/
 
+# Uploads (user-generated files, served as static assets)
+# Ignore all upload content but preserve directory structure via .gitkeep
+uploads/**
+!uploads/.gitkeep
+!uploads/.gitignore
+!uploads/*/
+!uploads/*/.gitkeep
+
 # Alembic
 alembic/versions/*.py
 
